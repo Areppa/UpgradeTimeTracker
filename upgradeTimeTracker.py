@@ -59,7 +59,6 @@ def main():
             print("Quiting!")
             break
         elif command == "p":
-            print("Printing upgrades\n")
             printUpgrades()
         elif command == "a":
             addUpgrade()
@@ -89,6 +88,7 @@ def menu():
 
 
 def printUpgrades():
+    print("Printing upgrades\n")
     """
     TODO List in time left order by default
     """
