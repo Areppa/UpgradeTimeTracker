@@ -9,8 +9,6 @@ import time
 COMMAND_LIST = ["p", "a", "m", "d", "q"]
 upgrades = []
 
-# Base configuration before running
-unixTime = int(time.time())
 
 class Upgrade:
     """
@@ -71,7 +69,6 @@ def main():
             deleteUpgrade()
 
 
-
 def menu():
     command = "nocommand"
     while not command in COMMAND_LIST:
@@ -101,6 +98,7 @@ def printUpgrades():
         for upgrade in upgrades:
             upgrade.printTimeLeft()
 
+
 def addUpgrade():
     print("Adding upgrade timer\n")
     upgradeName = input("Upgrade name: ")
@@ -117,8 +115,10 @@ def addUpgrade():
 
     upgrades.append(Upgrade(upgradeName, upgradeDuration))
 
+
 def modifyUpgrade():
     print("MODIFY PLACEHOLDER")
+
 
 def deleteUpgrade():
     print("Upgrades:")
@@ -136,8 +136,6 @@ def deleteUpgrade():
                 print(f"Deleted {upgrade}")
             except NameError:
                 print("ERROR DELETING UPGRADE!!!")
-
-
 
 
 if __name__ == "__main__":
