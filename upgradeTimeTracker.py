@@ -6,7 +6,8 @@ Made by Aaro Halme
 import time
 
 # Setting variables
-COMMAND_LIST = ["p", "a", "m", "d", "q"]
+COMMAND_LIST = ["p", "a", "m", "d", "q", "w", "r"]
+UPGRADES_FILE = "upgrades.csv"
 upgrades = []
 
 
@@ -27,11 +28,14 @@ class Upgrade:
         self.__duration = int(duration)
         self.__endTime = int(self.__startTime + self.__duration)
 
-    def printName(self):
-        print(f"{self.__name}")
-
     def getName(self):
         return self.__name
+
+    def getStartTime(self):
+        return self.__startTime
+
+    def getDuration(self):
+        return self.__duration
 
     def printTimeLeft(self):
         timeLeft = self.__endTime - int(time.time())
@@ -46,7 +50,6 @@ class Upgrade:
         print(f"StartTime: {self.__startTime}")
         print(f"EndTime: {self.__endTime}")
         print(f"Duration: {self.__duration}")
-
 
 def main():
 
@@ -66,6 +69,10 @@ def main():
             modifyUpgrade()
         elif command == "d":
             deleteUpgrade()
+        elif command == "w":
+            saveUpgradesToFile()
+        elif command == "r":
+            loadUpgradesFromFile()
 
 
 def menu():
@@ -77,6 +84,8 @@ def menu():
         print("- [A]dd upgrade")
         print("- [M]odify upgrade")
         print("- [D]elete upgrade")
+        print("- [W]rite to file")
+        print("- [R]ead from file")
         print("- [Q]uit")
 
         command = input("\n> ")
@@ -85,6 +94,27 @@ def menu():
             print("Incorrect action.\n")
         else:
             return command
+
+def saveUpgradesToFile():
+    with open(UPGRADES_FILE, "w") as file:
+        file.write("Name, Start Time, Duration\n")
+        for upgrade in upgrades:
+            file.write(f"{upgrade.getName()}, {upgrade.getStartTime()}, {upgrade.getDuration()}\n")
+    print(f"Upgrades saved to {UPGRADES_FILE}")
+
+def loadUpgradesFromFile():
+    with open(UPGRADES_FILE, "r") as file:
+        lines = file.readlines()
+
+        # Skip the first line (descriptions)
+        for line in lines[1:]:
+            parts = line.strip().split(',')
+
+            name = parts[0]
+            start_time = int(parts[1])
+            duration = int(parts[2])
+
+
 
 
 def printUpgrades():
