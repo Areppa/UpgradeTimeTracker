@@ -53,6 +53,9 @@ def main():
 
     print("Upgrade Time Tracker")
 
+    # Program should load upgrades automatically when starting
+    loadUpgradesFromFile(False)
+
     while True:
         command = menu()
 
@@ -70,7 +73,7 @@ def main():
         elif command == "w":
             saveUpgradesToFile()
         elif command == "r":
-            loadUpgradesFromFile()
+            loadUpgradesFromFile(True)
 
 
 def menu():
@@ -102,10 +105,10 @@ def saveUpgradesToFile():
     print(f"Upgrades saved to {UPGRADES_FILE}")
 
 
-def loadUpgradesFromFile():
+def loadUpgradesFromFile(verbose):
     added_upgrades_counter = 0
     duplicate_upgrades_counter = 0
-    
+
     with open(UPGRADES_FILE, "r") as file:
         lines = file.readlines()
 
@@ -123,9 +126,10 @@ def loadUpgradesFromFile():
                 upgrades.append(Upgrade(start_time, name, duration))
                 added_upgrades_counter += 1
 
-    print(f"Added {added_upgrades_counter} upgrades.")
-    if duplicate_upgrades_counter > 0:
-        print(f"Skipped {duplicate_upgrades_counter} duplicates.")
+    if verbose:
+        print(f"Added {added_upgrades_counter} upgrades.")
+        if duplicate_upgrades_counter > 0:
+            print(f"Skipped {duplicate_upgrades_counter} duplicates.")
 
 
 def printUpgrades():
