@@ -6,7 +6,7 @@ Made by Aaro Halme
 import time
 
 # Setting variables
-COMMAND_LIST = ["p", "a", "m", "d", "q", "w", "r"]
+COMMAND_LIST = ["p", "a", "m", "d", "q"]
 UPGRADES_FILE = "upgrades.csv"
 upgrades = []
 
@@ -70,10 +70,6 @@ def main():
             modifyUpgrade()
         elif command == "d":
             deleteUpgrade()
-        elif command == "w":
-            saveUpgradesToFile()
-        elif command == "r":
-            loadUpgradesFromFile(True)
 
 
 def menu():
@@ -85,8 +81,6 @@ def menu():
         print("- [A]dd upgrade")
         print("- [M]odify upgrade")
         print("- [D]elete upgrade")
-        print("- [W]rite to file")
-        print("- [R]ead from file")
         print("- [Q]uit")
 
         command = input("\n> ")
@@ -163,7 +157,7 @@ def addUpgrade(upgrade_start_time):
             print("Please type number")
 
     upgrades.append(Upgrade(upgrade_start_time, upgrade_name, upgrade_duration))
-
+    saveUpgradesToFile()
 
 def modifyUpgrade():
     print("MODIFY PLACEHOLDER")
