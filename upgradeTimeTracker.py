@@ -103,6 +103,9 @@ def saveUpgradesToFile():
 
 
 def loadUpgradesFromFile():
+    added_upgrades_counter = 0
+    duplicate_upgrades_counter = 0
+    
     with open(UPGRADES_FILE, "r") as file:
         lines = file.readlines()
 
@@ -113,8 +116,16 @@ def loadUpgradesFromFile():
             name = parts[0]
             start_time = int(parts[1])
             duration = int(parts[2])
-            upgrades.append(Upgrade(start_time, name, duration))
-            print(f"Added {name}")
+
+            if any(obj.getName() == name for obj in upgrades):
+                duplicate_upgrades_counter += 1
+            else:
+                upgrades.append(Upgrade(start_time, name, duration))
+                added_upgrades_counter += 1
+
+    print(f"Added {added_upgrades_counter} upgrades.")
+    if duplicate_upgrades_counter > 0:
+        print(f"Skipped {duplicate_upgrades_counter} duplicates.")
 
 
 def printUpgrades():
