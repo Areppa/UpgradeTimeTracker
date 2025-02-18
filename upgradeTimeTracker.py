@@ -37,19 +37,17 @@ class Upgrade:
     def getDuration(self):
         return self.__duration
 
+    def getTimeLeft(self):
+        return self.__endTime - int(time.time())
+
     def printTimeLeft(self):
-        timeLeft = self.__endTime - int(time.time())
-        if timeLeft > 0:
-            print(f"{self.__name}: {timeLeft}s left")
-            return timeLeft
+        time_left = self.__endTime - int(time.time())
+        if time_left > 0:
+            print(f"{self.__name}: {time_left}s left")
+            return time_left
         else:
             print(f"{self.__name}: Upgrade completed")
             return 0
-
-    def printTime(self):
-        print(f"StartTime: {self.__startTime}")
-        print(f"EndTime: {self.__endTime}")
-        print(f"Duration: {self.__duration}")
 
 def main():
 
@@ -95,12 +93,14 @@ def menu():
         else:
             return command
 
+
 def saveUpgradesToFile():
     with open(UPGRADES_FILE, "w") as file:
         file.write("Name, Start Time, Duration\n")
         for upgrade in upgrades:
             file.write(f"{upgrade.getName()}, {upgrade.getStartTime()}, {upgrade.getDuration()}\n")
     print(f"Upgrades saved to {UPGRADES_FILE}")
+
 
 def loadUpgradesFromFile():
     with open(UPGRADES_FILE, "r") as file:
@@ -140,18 +140,22 @@ def addUpgrade(upgrade_start_time):
     # TODO Add better time format
     # For example: d h m
     while True:
-        upgradeDuration = input("Upgrade duration: ")
+        upgrade_duration = input("Upgrade duration: ")
         try:
-            upgradeDuration = int(upgradeDuration)
+            upgrade_duration = int(upgrade_duration)
             break
         except ValueError:
             print("Please type number")
 
-    upgrades.append(Upgrade(upgrade_start_time, upgrade_name, upgradeDuration))
+    upgrades.append(Upgrade(upgrade_start_time, upgrade_name, upgrade_duration))
 
 
 def modifyUpgrade():
     print("MODIFY PLACEHOLDER")
+
+    """
+    MODIFY UPGRADE CODE HERE
+    """
 
 
 def deleteUpgrade():
@@ -160,17 +164,11 @@ def deleteUpgrade():
     for upgrade in upgrades:
         print(f"- {upgrade.getName()}")
 
-    selectedUpgrade = input("Which project you would like to delete?: ")
+    selected_upgrade = input("Which project you would like to delete?: ")
 
-    # THIS COULD BE BETTER OPTIMIZED!
-    for upgradeIndex in len(upgrades):
-        if upgrade.getName() == selectedUpgrade:
-            try:
-                del upgrade
-                print(f"Deleted {upgrade}")
-            except NameError:
-                print("ERROR DELETING UPGRADE!!!")
-
+    """
+    DELETE UPGRADE CODE HERE
+    """
 
 if __name__ == "__main__":
     main()
