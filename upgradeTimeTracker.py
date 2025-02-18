@@ -13,10 +13,10 @@ upgrades = []
 
 class Upgrade:
     """
-    This class stores the ugprade and its information
+    This class stores the upgrade and its information
     """
 
-    def __init__(self, name, duration):
+    def __init__(self, start_time, name, duration):
         """
         Initialization of upgrade
 
@@ -24,7 +24,7 @@ class Upgrade:
         """
 
         self.__name = name
-        self.__startTime = int(time.time())
+        self.__startTime = start_time
         self.__duration = int(duration)
         self.__endTime = int(self.__startTime + self.__duration)
 
@@ -64,7 +64,7 @@ def main():
         elif command == "p":
             printUpgrades()
         elif command == "a":
-            addUpgrade()
+            addUpgrade(0)
         elif command == "m":
             modifyUpgrade()
         elif command == "d":
@@ -76,7 +76,7 @@ def main():
 
 
 def menu():
-    command = "nocommand"
+    command = "no_command"
     while not command in COMMAND_LIST:
         print("\nSelect action that you want to perform: \n")
 
@@ -113,8 +113,8 @@ def loadUpgradesFromFile():
             name = parts[0]
             start_time = int(parts[1])
             duration = int(parts[2])
-
-
+            upgrades.append(Upgrade(start_time, name, duration))
+            print(f"Added {name}")
 
 
 def printUpgrades():
@@ -129,9 +129,13 @@ def printUpgrades():
             upgrade.printTimeLeft()
 
 
-def addUpgrade():
+def addUpgrade(upgrade_start_time):
     print("Adding upgrade timer\n")
-    upgradeName = input("Upgrade name: ")
+    upgrade_name = input("Upgrade name: ")
+
+    # If upgradeStartTime is not specified -> use current time
+    if upgrade_start_time == 0:
+        upgrade_start_time = int(time.time())
 
     # TODO Add better time format
     # For example: d h m
@@ -143,7 +147,7 @@ def addUpgrade():
         except ValueError:
             print("Please type number")
 
-    upgrades.append(Upgrade(upgradeName, upgradeDuration))
+    upgrades.append(Upgrade(upgrade_start_time, upgrade_name, upgradeDuration))
 
 
 def modifyUpgrade():
