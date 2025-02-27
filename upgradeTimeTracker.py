@@ -156,7 +156,7 @@ def addUpgrade(upgrade_start_time):
     # TODO Add better time format
     # For example: d h m
     while True:
-        upgrade_duration = input("Upgrade duration: ")
+        upgrade_duration = userTimeToUnix()
         try:
             upgrade_duration = int(upgrade_duration)
             break
@@ -198,6 +198,19 @@ def timeFormat(seconds):
     formattedTime = f"{days}Days {hours}h {minutes}m {seconds}s"
 
     return formattedTime
+
+
+def userTimeToUnix():
+    time = input("Upgrade duration in DD HH MM format: ")
+
+    days = int(time.split(" ")[0])
+    hours = int(time.split(" ")[1])
+    minutes = int(time.split(" ")[2])
+
+    # unixTime = time in seconds
+    unixTime = days * 86400 + hours * 3600 + minutes * 60
+
+    return unixTime
 
 
 if __name__ == "__main__":
