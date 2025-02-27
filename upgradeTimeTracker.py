@@ -230,7 +230,17 @@ def secondsToFormattedTime(seconds):
     minutes = seconds // 60
     seconds %= 60
 
-    return f"{days} Days {hours}h {minutes}m {seconds}s"
+    formattedTime = ""
+    if days > 0:
+        formattedTime += f"{days} Days "
+    if hours > 0:
+        formattedTime += f"{hours}h "
+    if minutes > 0:
+        formattedTime += f"{minutes}m "
+    if seconds > 0:
+        formattedTime += f"{seconds}s"
+
+    return formattedTime
 
 
 def formattedTimeToSeconds():
