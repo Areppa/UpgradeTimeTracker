@@ -73,6 +73,11 @@ def main():
 
 
 def menu():
+    """
+    Basic menu system that handles user input
+
+    :return:
+    """
     command = "no_command"
     while not command in COMMAND_LIST:
         print("\nSelect action that you want to perform: \n")
@@ -92,6 +97,11 @@ def menu():
 
 
 def saveUpgradesToFile():
+    """
+    Saves upgrades into UPGRADES_FILE
+
+    :return:
+    """
     with open(UPGRADES_FILE, "w") as file:
         file.write("Name, Start Time, Duration\n")
         for upgrade in upgrades:
@@ -100,6 +110,12 @@ def saveUpgradesToFile():
 
 
 def loadUpgradesFromFile(verbose):
+    """
+    Loads upgrades from UPGRADES_FILE and adds those into upgrades list
+
+    :param verbose:
+    :return:
+    """
     added_upgrades_counter = 0
     duplicate_upgrades_counter = 0
 
@@ -127,6 +143,11 @@ def loadUpgradesFromFile(verbose):
 
 
 def printUpgrades():
+    """
+    Prints upgrades to user ordered by timeLeft
+
+    :return:
+    """
     print("Printing upgrades\n")
     """
     TODO List in time left order by default
@@ -138,7 +159,7 @@ def printUpgrades():
         sorted_upgrades = sorted(upgrades, key=lambda x: x.getTimeLeft())
         for upgrade in sorted_upgrades:
             if upgrade.getTimeLeft() > 0:
-                timeLeft = timeFormat(upgrade.getTimeLeft())
+                timeLeft = secondsToFormattedTime(upgrade.getTimeLeft())
             else:
                 timeLeft = "Upgrade completed"
 
@@ -148,6 +169,12 @@ def printUpgrades():
 
 
 def addUpgrade(upgrade_start_time):
+    """
+    Adds upgrade to upgrades list
+
+    :param upgrade_start_time:
+    :return:
+    """
     print("Adding upgrade timer\n")
     upgrade_name = input("Upgrade name: ")
 
@@ -158,7 +185,7 @@ def addUpgrade(upgrade_start_time):
     # TODO Add better time format
     # For example: d h m
     while True:
-        upgrade_duration = userTimeToUnix()
+        upgrade_duration = formattedTimeToSeconds()
         try:
             upgrade_duration = int(upgrade_duration)
             break
@@ -189,7 +216,13 @@ def deleteUpgrade():
     """
 
 
-def timeFormat(seconds):
+def secondsToFormattedTime(seconds):
+    """
+    Converts seconds into formatted time
+
+    :param seconds:
+    :return:
+    """
     days = seconds // 86400
     seconds %= 86400
     hours = seconds // 3600
@@ -197,12 +230,10 @@ def timeFormat(seconds):
     minutes = seconds // 60
     seconds %= 60
 
-    formattedTime = f"{days} Days {hours}h {minutes}m {seconds}s"
-
-    return formattedTime
+    return f"{days} Days {hours}h {minutes}m {seconds}s"
 
 
-def userTimeToUnix():
+def formattedTimeToSeconds():
     """
     Ask user for time in DD HH MM format and return that converted to seconds
 
