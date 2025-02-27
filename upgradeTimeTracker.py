@@ -80,7 +80,7 @@ def menu():
     """
     command = "no_command"
     while not command in COMMAND_LIST:
-        print("\nSelect action that you want to perform: \n")
+        print("\nSelect action:")
 
         # Print commands
         for COMMAND_PRINT in COMMAND_PRINTS:
