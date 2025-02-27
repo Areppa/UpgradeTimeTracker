@@ -50,7 +50,7 @@ class Upgrade:
     def printTimeLeft(self):
         time_left = self.__endTime - int(time.time())
         if time_left > 0:
-            print(f"{self.__name}: {time_left}s left")
+            print(f"{self.__name}: {timeFormat(time_left)} left")
             return time_left
         else:
             print(f"{self.__name}: Upgrade completed")
@@ -88,8 +88,10 @@ def menu():
         for COMMAND_PRINT in COMMAND_PRINTS:
             print(f"- {COMMAND_PRINT}")
 
+        # Ask user for a command
         command = input("\n> ")
-        
+
+        # Check if command is valid
         if not command in COMMAND_LIST:
             print("Incorrect action.\n")
         else:
@@ -183,6 +185,20 @@ def deleteUpgrade():
     """
     DELETE UPGRADE CODE HERE
     """
+
+
+def timeFormat(seconds):
+    days = seconds // 86400
+    seconds %= 86400
+    hours = seconds // 3600
+    seconds %= 3600
+    minutes = seconds // 60
+    seconds %= 60
+
+    formattedTime = f"{days}Days {hours}h {minutes}m {seconds}s"
+
+    return formattedTime
+
 
 if __name__ == "__main__":
     main()
