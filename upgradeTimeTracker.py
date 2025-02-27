@@ -54,7 +54,7 @@ def main():
     print("Upgrade Time Tracker")
 
     # Program should load upgrades automatically when starting
-    loadUpgradesFromFile(False)
+    loadUpgradesFromFile()
 
     while True:
         command = menu()
@@ -106,40 +106,38 @@ def saveUpgradesToFile():
         file.write("Name, Start Time, Duration\n")
         for upgrade in upgrades:
             file.write(f"{upgrade.getName()}, {upgrade.getStartTime()}, {upgrade.getDuration()}\n")
-    print(f"Upgrades saved to {UPGRADES_FILE}")
+    print(f"Upgrades have been successfully saved to {UPGRADES_FILE}")
 
 
-def loadUpgradesFromFile(verbose):
+def loadUpgradesFromFile():
     """
     Loads upgrades from UPGRADES_FILE and adds those into upgrades list
 
-    :param verbose:
     :return:
     """
     added_upgrades_counter = 0
     duplicate_upgrades_counter = 0
 
-    with open(UPGRADES_FILE, "r") as file:
-        lines = file.readlines()
+    try:
+        with open(UPGRADES_FILE, "r") as file:
+            lines = file.readlines()
 
-        # Skip the first line (descriptions)
-        for line in lines[1:]:
-            parts = line.strip().split(',')
+            # Skip the first line (descriptions)
+            for line in lines[1:]:
+                parts = line.strip().split(',')
 
-            name = parts[0]
-            start_time = int(parts[1])
-            duration = int(parts[2])
+                name = parts[0]
+                start_time = int(parts[1])
+                duration = int(parts[2])
 
-            if any(obj.getName() == name for obj in upgrades):
-                duplicate_upgrades_counter += 1
-            else:
-                upgrades.append(Upgrade(start_time, name, duration))
-                added_upgrades_counter += 1
-
-    if verbose:
-        print(f"Added {added_upgrades_counter} upgrades.")
-        if duplicate_upgrades_counter > 0:
-            print(f"Skipped {duplicate_upgrades_counter} duplicates.")
+                if any(obj.getName() == name for obj in upgrades):
+                    duplicate_upgrades_counter += 1
+                else:
+                    upgrades.append(Upgrade(start_time, name, duration))
+                    added_upgrades_counter += 1
+    except FileNotFoundError:
+        print(f"Could not locate {UPGRADES_FILE}. Creating a new file.")
+        saveUpgradesToFile()
 
 
 def printUpgrades():
