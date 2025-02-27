@@ -201,11 +201,16 @@ def timeFormat(seconds):
 
 
 def userTimeToUnix():
-    time = input("Upgrade duration in DD HH MM format: ")
+    """
+    Ask user for time in DD HH MM format and return that converted to seconds
 
-    days = int(time.split(" ")[0])
-    hours = int(time.split(" ")[1])
-    minutes = int(time.split(" ")[2])
+    :return:
+    """
+    timeInput = input("Upgrade duration in DD HH MM format: ")
+
+    days = int(timeInput.split(" ")[0])
+    hours = int(timeInput.split(" ")[1])
+    minutes = int(timeInput.split(" ")[2])
 
     # unixTime = time in seconds
     unixTime = days * 86400 + hours * 3600 + minutes * 60
