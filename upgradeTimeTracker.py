@@ -7,6 +7,13 @@ import time
 
 # Setting variables
 COMMAND_LIST = ["p", "a", "m", "d", "q"]
+COMMAND_PRINTS = [
+    "[P]rint upgrades",
+    "[A]dd upgrade",
+    "[M]odify upgrade",
+    "[D]elete upgrade",
+    "[Q]uit"
+]
 UPGRADES_FILE = "upgrades.csv"
 upgrades = []
 
@@ -77,11 +84,9 @@ def menu():
     while not command in COMMAND_LIST:
         print("\nSelect action that you want to perform: \n")
 
-        print("- [P]rint upgrades")
-        print("- [A]dd upgrade")
-        print("- [M]odify upgrade")
-        print("- [D]elete upgrade")
-        print("- [Q]uit")
+        # Print commands
+        for COMMAND_PRINT in COMMAND_PRINTS:
+            print(f"- {COMMAND_PRINT}")
 
         command = input("\n> ")
         
