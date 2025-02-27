@@ -14,8 +14,9 @@ COMMAND_PRINTS = [
     "[D]elete upgrade",
     "[Q]uit"
 ]
-UPGRADES_FILE = "upgrades.csv"
-upgrades = []
+
+UPGRADES_FILE = "upgrades.csv" # File where upgrades are saved
+upgrades = [] # List of upgrades
 
 
 class Upgrade:
@@ -47,14 +48,6 @@ class Upgrade:
     def getTimeLeft(self):
         return self.__endTime - int(time.time())
 
-    def printTimeLeft(self):
-        time_left = self.__endTime - int(time.time())
-        if time_left > 0:
-            print(f"{self.__name}: {timeFormat(time_left)} left")
-            return time_left
-        else:
-            print(f"{self.__name}: Upgrade completed")
-            return 0
 
 def main():
 
@@ -141,8 +134,17 @@ def printUpgrades():
     if len(upgrades) == 0:
         print("No upgrades")
     else:
-        for upgrade in upgrades:
-            upgrade.printTimeLeft()
+        # Sort upgrades based on timeLeft
+        sorted_upgrades = sorted(upgrades, key=lambda x: x.getTimeLeft())
+        for upgrade in sorted_upgrades:
+            if upgrade.getTimeLeft() > 0:
+                timeLeft = timeFormat(upgrade.getTimeLeft())
+            else:
+                timeLeft = "Upgrade completed"
+
+            print(f"{upgrade.getName()}: "
+                  f"{(20 - len(upgrade.getName())) * " "}" # Have a space between name and time
+                  f"{timeLeft}")
 
 
 def addUpgrade(upgrade_start_time):
@@ -195,7 +197,7 @@ def timeFormat(seconds):
     minutes = seconds // 60
     seconds %= 60
 
-    formattedTime = f"{days}Days {hours}h {minutes}m {seconds}s"
+    formattedTime = f"{days} Days {hours}h {minutes}m {seconds}s"
 
     return formattedTime
 
