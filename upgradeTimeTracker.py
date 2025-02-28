@@ -87,7 +87,7 @@ def menu():
             print(f"- {COMMAND_PRINT}")
 
         # Ask user for a command
-        command = input("\n> ")
+        command = input("\n> ").lower()
 
         # Check if command is valid
         if not command in COMMAND_LIST:
