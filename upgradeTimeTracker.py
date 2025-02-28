@@ -155,6 +155,7 @@ def printUpgrades():
     else:
         # Sort upgrades based on timeLeft
         sorted_upgrades = sorted(upgrades, key=lambda x: x.getTimeLeft())
+        longest_name = updateLongestVar()
         for upgrade in sorted_upgrades:
             if upgrade.getTimeLeft() > 0:
                 timeLeft = secondsToFormattedTime(upgrade.getTimeLeft())
@@ -162,7 +163,7 @@ def printUpgrades():
                 timeLeft = "Upgrade completed"
 
             print(f"{upgrade.getName()}: "
-                  f"{(20 - len(upgrade.getName())) * " "}" # Have a space between name and time
+                  f"{(longest_name - len(upgrade.getName())) * " "} " # Have a space between name and time
                   f"{timeLeft}")
 
 
@@ -212,6 +213,20 @@ def deleteUpgrade():
     """
     DELETE UPGRADE CODE HERE
     """
+
+
+def updateLongestVar():
+    """
+    Checks all upgrade names and returns the longest length
+
+    :return: int, len of the longest update name
+    """
+    longest_name = 0
+    for upgrade in upgrades:
+        if len(upgrade.getName()) > longest_name:
+            longest_name = len(upgrade.getName())
+
+    return longest_name
 
 
 def secondsToFormattedTime(seconds):
