@@ -142,7 +142,7 @@ def loadUpgradesFromFile():
 
 def printUpgrades():
     """
-    Prints upgrades to user ordered by timeLeft
+    Prints upgrades to user ordered by time_left
 
     :return:
     """
@@ -153,18 +153,19 @@ def printUpgrades():
     if len(upgrades) == 0:
         print("No upgrades")
     else:
-        # Sort upgrades based on timeLeft
+        # Sort upgrades based on time_left
         sorted_upgrades = sorted(upgrades, key=lambda x: x.getTimeLeft())
         longest_name = updateLongestVar()
         for upgrade in sorted_upgrades:
             if upgrade.getTimeLeft() > 0:
-                timeLeft = secondsToFormattedTime(upgrade.getTimeLeft())
+                time_left = secondsToFormattedTime(upgrade.getTimeLeft())
             else:
-                timeLeft = "Upgrade completed"
+                time_left = "Upgrade completed"
+                continue # Skips all completed upgrades
 
             print(f"{upgrade.getName()}: "
                   f"{(longest_name - len(upgrade.getName())) * " "} " # Have a space between name and time
-                  f"{timeLeft}")
+                  f"{time_left}")
 
 
 def addUpgrade(upgrade_start_time):
@@ -177,10 +178,6 @@ def addUpgrade(upgrade_start_time):
     print("Adding upgrade timer\n")
     upgrade_name = input("Upgrade name: ")
 
-    # If upgradeStartTime is not specified -> use current time
-    if upgrade_start_time == 0:
-        upgrade_start_time = int(time.time())
-
     # TODO Add better time format
     # For example: d h m
     while True:
@@ -190,6 +187,10 @@ def addUpgrade(upgrade_start_time):
             break
         except ValueError:
             print("Please type number")
+
+    # If upgradeStartTime is not specified -> use current time
+    if upgrade_start_time == 0:
+        upgrade_start_time = int(time.time())
 
     upgrades.append(Upgrade(upgrade_start_time, upgrade_name, upgrade_duration))
     saveUpgradesToFile()
