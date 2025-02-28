@@ -244,17 +244,17 @@ def secondsToFormattedTime(seconds):
     minutes = seconds // 60
     seconds %= 60
 
-    formattedTime = ""
+    formatted_time = ""
     if days > 0:
-        formattedTime += f"{days} Days "
+        formatted_time += f"{days} Days "
     if hours > 0:
-        formattedTime += f"{hours}h "
+        formatted_time += f"{hours}h "
     if minutes > 0:
-        formattedTime += f"{minutes}m "
+        formatted_time += f"{minutes}m "
     if seconds > 0:
-        formattedTime += f"{seconds}s"
+        formatted_time += f"{seconds}s"
 
-    return formattedTime
+    return formatted_time
 
 
 def formattedTimeToSeconds():
@@ -263,16 +263,16 @@ def formattedTimeToSeconds():
 
     :return:
     """
-    timeInput = input("Upgrade duration in DD HH MM format: ")
+    time_input = input("Upgrade duration in DD HH MM format: ")
 
-    days = int(timeInput.split(" ")[0])
-    hours = int(timeInput.split(" ")[1])
-    minutes = int(timeInput.split(" ")[2])
+    days = int(time_input.split(" ")[0])
+    hours = int(time_input.split(" ")[1])
+    minutes = int(time_input.split(" ")[2])
 
-    # unixTime = time in seconds
-    unixTime = days * 86400 + hours * 3600 + minutes * 60
+    # unix_time = time in seconds
+    unix_time = days * 86400 + hours * 3600 + minutes * 60
 
-    return unixTime
+    return unix_time
 
 
 if __name__ == "__main__":
